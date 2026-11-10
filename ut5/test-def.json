@@ -1,0 +1,390 @@
+
+{
+  "info": {
+    "name": "Funkos API 52",
+    "description": "Pruebas CRUD, paginación, filtros, categorías y validaciones de la API Funkos.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    }
+  ],
+  "item": [
+    {
+      "name": "12.1 - CRUD",
+      "item": [
+        {
+          "name": "Listar paginado",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/funkos?page=0&size=3"
+          }
+        },
+        {
+          "name": "Segunda pagina",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/funkos?page=1&size=3"
+          }
+        },
+        {
+          "name": "Ordenar precio descendente",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/funkos?sort=precio,desc&size=3"
+          }
+        },
+        {
+          "name": "Ordenar categoria y precio",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/funkos?sort=categoria.nombre,asc&sort=precio,desc&size=6"
+          }
+        },
+        {
+          "name": "Obtener por ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/funkos/1"
+          }
+        },
+        {
+          "name": "Crear funko",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Pikachu\",\n  \"precio\": 20.00,\n  \"cantidad\": 7,\n  \"categoria\": \"ANIME\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/v1/funkos"
+          }
+        },
+        {
+          "name": "Reemplazar PUT",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Pikachu XL\",\n  \"precio\": 29.90,\n  \"cantidad\": 3,\n  \"categoria\": \"ANIME\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/v1/funkos/7"
+          }
+        },
+        {
+          "name": "Modificar PATCH",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"precio\": 24.90\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/v1/funkos/7"
+          }
+        },
+        {
+          "name": "Borrar funko",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v1/funkos/7"
+          }
+        }
+      ]
+    },
+    {
+      "name": "12.2 - Filtros y paginacion",
+      "item": [
+        {
+          "name": "Filtrar categoria",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/funkos?categoria=anime"
+          }
+        },
+        {
+          "name": "Filtrar nombre",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/funkos?nombre=man"
+          }
+        },
+        {
+          "name": "Filtrar precio maximo",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/funkos?precioMax=18"
+          }
+        },
+        {
+          "name": "Combinar filtros",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/funkos?categoria=marvel&precioMax=20"
+          }
+        },
+        {
+          "name": "Combinar filtros y ordenacion",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/funkos?nombre=a&categoria=anime&precioMax=20&sort=precio,asc"
+          }
+        },
+        {
+          "name": "Total filtrado",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/funkos?categoria=anime&size=1"
+          }
+        },
+        {
+          "name": "Pagina inexistente",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/funkos?page=500"
+          }
+        },
+        {
+          "name": "Ordenacion invalida",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/funkos?sort=inventado"
+          }
+        },
+        {
+          "name": "Limite de tamaño",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/funkos?size=99999"
+          }
+        },
+        {
+          "name": "Comprobar N+1",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/funkos?size=20"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Categorias",
+      "item": [
+        {
+          "name": "Listar categorias",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/categorias"
+          }
+        },
+        {
+          "name": "Crear categoria",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"videojuegos\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/v1/categorias"
+          }
+        },
+        {
+          "name": "Borrar categoria",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v1/categorias/5"
+          }
+        }
+      ]
+    },
+    {
+      "name": "12.3 - Validaciones y errores",
+      "item": [
+        {
+          "name": "Funko inexistente",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/funkos/9999"
+          }
+        },
+        {
+          "name": "Borrar funko inexistente",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v1/funkos/9999"
+          }
+        },
+        {
+          "name": "Categoria inexistente",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/categorias/9999"
+          }
+        },
+        {
+          "name": "Datos invalidos",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"\",\n  \"precio\": -1,\n  \"cantidad\": -5,\n  \"categoria\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/v1/funkos"
+          }
+        },
+        {
+          "name": "Categoria no existe",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Totoro\",\n  \"precio\": 25.00,\n  \"cantidad\": 2,\n  \"categoria\": \"GHIBLI\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/v1/funkos"
+          }
+        },
+        {
+          "name": "ID no numerico",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/funkos/abc"
+          }
+        },
+        {
+          "name": "JSON roto",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"nombre\": }"
+            },
+            "url": "{{baseUrl}}/api/v1/funkos"
+          }
+        },
+        {
+          "name": "Nombre duplicado",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Goku\",\n  \"precio\": 30.00,\n  \"cantidad\": 1,\n  \"categoria\": \"ANIME\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/v1/funkos"
+          }
+        },
+        {
+          "name": "Borrar categoria con funkos",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v1/categorias/1"
+          }
+        },
+        {
+          "name": "PATCH mismo nombre",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Goku\",\n  \"precio\": 23.00\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/v1/funkos/5"
+          }
+        }
+      ]
+    }
+  ]
+}

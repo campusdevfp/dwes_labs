@@ -14,7 +14,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.net.URI;
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -27,11 +29,22 @@ public class FunkosRestController {
         this.servicio = servicio;
     }
 
+//    @GetMapping
+//    public ResponseEntity<Page<FunkoResponse>> findAll(
+//            @PageableDefault(size = 20, sort = "id") Pageable pageable) {
+//
+//        return ResponseEntity.ok(servicio.findAll(sanear(pageable)));
+//    }
+
     @GetMapping
-    public ResponseEntity<Page<FunkoResponse>> findAll(
+    public ResponseEntity<Page<FunkoResponse>> buscar(
+            @RequestParam Optional<String> categoria,
+            @RequestParam Optional<String> nombre,
+            @RequestParam Optional<BigDecimal> precioMax,
             @PageableDefault(size = 20, sort = "id") Pageable pageable) {
 
-        return ResponseEntity.ok(servicio.findAll(sanear(pageable)));
+        return ResponseEntity.ok(
+                servicio.buscar(categoria, nombre, precioMax, sanear(pageable)));
     }
 
     @GetMapping("/{id}")
