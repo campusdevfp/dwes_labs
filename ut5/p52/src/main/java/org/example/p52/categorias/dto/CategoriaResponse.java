@@ -1,5 +1,4 @@
 package org.example.p52.categorias.dto;
 
-public class CategoriaResponse {
+public record CategoriaResponse(Long id, String nombre, long numeroDeFunkos) {}
 
-}

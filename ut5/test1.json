@@ -1,0 +1,100 @@
+
+{
+  "info": {
+    "name": "Funkos API",
+    "description": "Pruebas CRUD de la API Funkos con Spring Boot",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080/api/v1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Listar Funkos",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/funkos?size=3",
+          "host": ["{{baseUrl}}"],
+          "path": ["funkos"],
+          "query": [
+            {
+              "key": "size",
+              "value": "3"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Obtener Funko por ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/funkos/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["funkos", "1"]
+        }
+      }
+    },
+    {
+      "name": "Crear Funko",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Pikachu\",\n  \"precio\": 20.00,\n  \"cantidad\": 7,\n  \"categoria\": \"ANIME\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/funkos",
+          "host": ["{{baseUrl}}"],
+          "path": ["funkos"]
+        }
+      }
+    },
+    {
+      "name": "Modificar Funko",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"precio\": 18.00\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/funkos/7",
+          "host": ["{{baseUrl}}"],
+          "path": ["funkos", "7"]
+        }
+      }
+    },
+    {
+      "name": "Eliminar Funko",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/funkos/7",
+          "host": ["{{baseUrl}}"],
+          "path": ["funkos", "7"]
+        }
+      }
+    }
+  ]
+}
