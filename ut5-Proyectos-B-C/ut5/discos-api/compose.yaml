@@ -1,0 +1,19 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: discos-postgres
+    environment:
+      POSTGRES_DB: discos
+      POSTGRES_USER: dwes
+      POSTGRES_PASSWORD: dwes2026
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-datos:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dwes -d discos"]
+      interval: 5s
+      retries: 5
+
+volumes:
+  postgres-datos:
